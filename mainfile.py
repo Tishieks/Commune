@@ -26,7 +26,7 @@ class MainWindow(QtWidgets.QWidget):
         layout.setContentsMargins(10, 10, 10, 10)
 
         # Create a label to display messages to the user
-        self.label = QtWidgets.QLabel("Press the button to speak")
+        self.label = QtWidgets.QLabel("                   COMMUNE: created by Team MADLABS")
         self.label.setStyleSheet("color: white;")
         layout.addWidget(self.label)
 
