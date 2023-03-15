@@ -14,7 +14,7 @@ class MainWindow(QtWidgets.QWidget):
         super().__init__()
 
         # Set the window title and size
-        self.setWindowTitle("Speech Translator")
+        self.setWindowTitle("Commune Prototype 0.01")
         self.resize(300, 200)
 
         # Set the window flags to remove the default window frame and enable transparency
@@ -26,7 +26,7 @@ class MainWindow(QtWidgets.QWidget):
         layout.setContentsMargins(10, 10, 10, 10)
 
         # Create a label to display messages to the user
-        self.label = QtWidgets.QLabel("                   COMMUNE: created by Team MADLABS")
+        self.label = QtWidgets.QLabel("          COMMUNE: created by Team MADLABS")
         self.label.setStyleSheet("color: white;")
         layout.addWidget(self.label)
 
