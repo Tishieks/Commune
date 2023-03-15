@@ -31,7 +31,7 @@ class MainWindow(QtWidgets.QWidget):
         layout.addWidget(self.label)
 
         # Create a button that calls the on_button_click method when clicked
-        button = QtWidgets.QPushButton("Speak")
+        button = QtWidgets.QPushButton("Click to commune")
         button.clicked.connect(self.on_button_click)
         button.setStyleSheet("""
             QPushButton {
@@ -57,6 +57,11 @@ class MainWindow(QtWidgets.QWidget):
             try:
                 # Recognize speech using Google's speech recognition service
                 speech_text = r.recognize_google(audio)
+                
+                if speech_text.lower() == "exit":
+                    QtWidgets.QApplication.quit()
+                    return
+                
                 self.label.setText(speech_text)
             except sr.UnknownValueError:
                 self.label.setText("could not understand")
@@ -78,7 +83,22 @@ class MainWindow(QtWidgets.QWidget):
         os.remove("voice.mp3")
 
     def paintEvent(self, event):
-        # Override the paintEvent method to draw a custom window frame with rounded corners
+         # Override the paintEvent method to draw a custom window frame with rounded corners
 
-        # Create a QPainter instance and set its pen and brush
-        painter = QtGui.QPainter(self)
+         # Create a QPainter instance and set its pen and brush
+         painter = QtGui.QPainter(self)
+         painter.setPen(QtCore.Qt.PenStyle.NoPen)
+         painter.setBrush(QtGui.QColor(80, 80, 80))
+
+         # Draw a rounded rectangle that fills the entire widget area
+         painter.drawRoundedRect(self.rect(), 20, 20)
+
+# Create a QApplication instance (required by PyQt6)
+app = QtWidgets.QApplication([])
+
+# Create and show the main window
+window = MainWindow()
+window.show()
+
+# Start the main loop of the application
+app.exec()
