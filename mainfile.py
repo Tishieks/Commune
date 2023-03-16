@@ -5,13 +5,13 @@ import os
 import tkinter as tk
 from tkinter import ttk
 import speech_recognition as sr
-from google_trans_new import google_translator
+from translate import Translator
 from gtts import gTTS
 from playsound import playsound
 
 # Initialize recognizer and translator instances
 r = sr.Recognizer()
-communulator = google_translator()
+communulator = Translator(to_lang="fr")
 
 
 def on_button_click():
@@ -32,8 +32,8 @@ def on_button_click():
         except sr.RequestError:
             label.config(text="Commune could not request result from google")
 
-    # Translate the recognized text to French using Google Translate
-    translated_text = communulator.translate(speech_text, lang_tgt='fr')
+    # Translate the recognized text to French using Translate
+    translated_text = communulator.translate(speech_text)
     label.config(text=translated_text)
 
     # Convert the translated text to speech using the Google Text-to-Speech service
@@ -68,3 +68,4 @@ button.pack(fill="x", padx=10, pady=10)
 
 # Start the main loop of the window
 window.mainloop()
+
