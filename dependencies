@@ -1,6 +1,6 @@
 pip install speechrecognition
 pip install pyaudio
-pip install google_trans_new
+pip install translate
 pip install playsound
 pip install gTTS
 pip install tk
