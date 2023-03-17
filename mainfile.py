@@ -7,12 +7,14 @@ from tkinter import ttk
 import speech_recognition as sr
 from translate import Translator
 from gtts import gTTS
-from playsound import playsound
+import pygame
 
 # Initialize recognizer and translator instances
 r = sr.Recognizer()
 communulator = Translator(to_lang="fr")
 
+# Initialize Pygame mixer
+pygame.mixer.init()
 
 def on_button_click():
     """
@@ -39,11 +41,19 @@ def on_button_click():
     # Convert the translated text to speech using the Google Text-to-Speech service
     voice = gTTS(translated_text, lang='fr')
     voice.save("Voice.mp3")
+
+    # Load the audio file into Pygame mixer
+    pygame.mixer.music.load("Voice.mp3")
+
     # Play the resulting audio
-    playsound("Voice.mp3")
+    pygame.mixer.music.play()
+
+    # Wait until the audio finishes playing
+    while pygame.mixer.music.get_busy():
+        pass
+
     # Remove the temporary audio file
     os.remove("Voice.mp3")
-
 
 # Create a tkinter window and set its title and size
 window = tk.Tk()
@@ -68,4 +78,3 @@ button.pack(fill="x", padx=10, pady=10)
 
 # Start the main loop of the window
 window.mainloop()
-
