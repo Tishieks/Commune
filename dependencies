@@ -1,6 +1,6 @@
 pip install speechrecognition
 pip install pyaudio
 pip install translate
-pip install playsound
+pip install pygame
 pip install gTTS
 pip install tk
