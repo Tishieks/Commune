@@ -4,10 +4,12 @@ speechRecognition and translation is done to convert spoken words into French te
 import os
 import tkinter as tk
 from tkinter import ttk
+import time
 import speech_recognition as sr
 from translate import Translator
 from gtts import gTTS
 import pygame
+
 
 # Initialize recognizer and translator instances
 r = sr.Recognizer()
@@ -29,31 +31,35 @@ def on_button_click():
             # Recognize speech using Google's speech recognition service
             speech_text = r.recognize_google(audio)
             label.config(text=speech_text)
+
+            # Translate the recognized text to French using Translate
+            translated_text = communulator.translate(speech_text)
+            label.config(text=translated_text)
+
+            # Convert the translated text to speech using the Google Text-to-Speech service
+            voice = gTTS(translated_text, lang='fr')
+            # Generate a unique filename for this audio file
+            filename = f"Voice-{int(time.time())}.mp3"
+            # Save voice data in memory
+            voice.save(filename)
+
+            # Load resulting audio into Pygame mixer
+            pygame.mixer.music.load(filename)
+
+            # Play resulting audio directly from memory
+            pygame.mixer.music.play()
+
         except sr.UnknownValueError:
             label.config(text="Commune could not understand")
         except sr.RequestError:
             label.config(text="Commune could not request result from google")
 
-    # Translate the recognized text to French using Translate
-    translated_text = communulator.translate(speech_text)
-    label.config(text=translated_text)
-
-    # Convert the translated text to speech using the Google Text-to-Speech service
-    voice = gTTS(translated_text, lang='fr')
-    voice.save("Voice.mp3")
-
-    # Load the audio file into Pygame mixer
-    pygame.mixer.music.load("Voice.mp3")
-
-    # Play the resulting audio
-    pygame.mixer.music.play()
-
     # Wait until the audio finishes playing
     while pygame.mixer.music.get_busy():
         pass
 
-    # Remove the temporary audio file
-    os.remove("Voice.mp3")
+    # Remove temporary audio file
+    os.remove(filename)
 
 # Create a tkinter window and set its title and size
 window = tk.Tk()
